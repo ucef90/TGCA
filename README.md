@@ -4,7 +4,7 @@ Site professionnel TGCA pour la construction de villas, riads, immeubles, appart
 
 ## Voir le site
 
-- **Vitrine en ligne (GitHub Pages, gratuite) :** https://ucef90.github.io/tgca/
+- **Vitrine en ligne (GitHub Pages, gratuite) :** https://ucef90.github.io/TGCA/
   Copie statique des pages publiques. Les formulaires et l'espace client y sont désactivés (un bandeau le signale).
 
 ## Contenu du dépôt
