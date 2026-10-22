@@ -1,0 +1,24 @@
+TGCA SARL.AU — SITE WEB ET APPLICATION DE SUIVI
+==============================================
+
+1. Installer Python 3.11 ou plus récent.
+2. Ouvrir un terminal dans ce dossier TGCA-site-web.
+3. Installer les bibliothèques :
+   python -m pip install -r requirements.txt
+4. Créer le compte administrateur :
+   python scripts/create_admin.py
+5. Démarrer le site :
+   python -m uvicorn app:app --host 127.0.0.1 --port 8000
+6. Ouvrir dans le navigateur :
+   http://127.0.0.1:8000
+
+Administration : http://127.0.0.1:8000/admin
+Connexion :      http://127.0.0.1:8000/connexion
+Espace client :  http://127.0.0.1:8000/espace-client
+
+IMPORTANT : l'ouverture du fichier HTML seul ne suffit pas.
+Les formulaires, la connexion et le suivi exigent que le serveur Python tourne.
+Le site n'est pas encore hébergé sur un domaine public.
+Avant mise en ligne : configurer SECRET, HTTPS, domaine, hébergeur et informations métier définitives.
+
+Documentation complète : README.md

@@ -1,0 +1,15 @@
+services:
+  tgca:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      ENVIRONMENT: production
+      TGCA_DATA_DIR: /app/data
+    volumes:
+      - tgca_data:/app/data
+    restart: unless-stopped
+volumes:
+  tgca_data:
