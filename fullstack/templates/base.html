@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<meta name="description" content="{{ description }}"><meta name="theme-color" content="#0a2440">
+<meta property="og:title" content="{{ title }}"><meta property="og:description" content="{{ description }}"><meta property="og:type" content="website"><meta property="og:locale" content="fr_MA"><meta property="og:image" content="{{ request.url_for('static',path='/img/villa-panoramique.webp') }}">
+<link rel="canonical" href="{{ request.url.scheme }}://{{ request.url.netloc }}{{ request.url.path }}">
+<link rel="icon" type="image/svg+xml" href="/static/img/logo.svg"><link rel="stylesheet" href="/static/css/style.css">
+<script type="application/ld+json" nonce="{{ csp_nonce }}">{"@context":"https://schema.org","@type":"GeneralContractor","name":"TGCA SARL.AU","description":"Construction de bâtiments, immeubles, appartements et villas au Maroc","telephone":"+212537896070","address":{"@type":"PostalAddress","streetAddress":"N° 520, Route de Kénitra, Km 7","addressLocality":"Salé","addressCountry":"MA"}}</script>
+</head>
+<body>
+<a href="#contenu" class="skip-link">Passer au contenu</a>
+<header class="site-header" id="entete">
+<div class="container header-inner"><a href="/" class="brand" aria-label="TGCA SARL.AU, accueil"><img src="/static/img/logo.svg" alt="TGCA SARL.AU" width="238" height="70"></a>
+<button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Ouvrir le menu"><svg class="ic"><use href="/static/img/icons.svg#menu"/></svg></button>
+<nav class="site-nav" id="site-nav" aria-label="Navigation principale">
+<a href="/" {% if current=='/' %}class="active" aria-current="page"{% endif %}>Accueil</a>
+<a href="/entreprise" {% if current=='/entreprise' %}class="active" aria-current="page"{% endif %}>L'entreprise</a>
+<a href="/expertises" {% if current=='/expertises' %}class="active" aria-current="page"{% endif %}>Expertises</a>
+<a href="/#architectures" class="nav-inspiration">Inspirations 3D</a>
+<a href="/realisations" {% if current.startswith('/realisations') %}class="active" aria-current="page"{% endif %}>Projets</a>
+<a href="/contact" {% if current=='/contact' %}class="active" aria-current="page"{% endif %}>Contact</a>
+<a href="/connexion" class="mobile-connect">Espace client</a>
+</nav>
+<div class="header-actions"><a href="/connexion" class="customer-link" title="Suivi de vos projets"><svg class="ic"><use href="/static/img/icons.svg#lock"/></svg> Espace client</a><a href="/devis" class="btn btn-gold btn-sm">Demander un devis <svg class="ic"><use href="/static/img/icons.svg#arrow"/></svg></a></div>
+</div>
+</header>
+<main id="contenu">{% block content %}{% endblock %}</main>
+{% if not hide_footer %}
+<section class="bottom-cta"><div class="container bottom-cta-inner"><div><span class="eyebrow">Vous avez un projet de construction ?</span><h2>Votre projet mérite un partenaire de confiance.</h2><p>Parlons de vos idées, de vos besoins et des prochaines étapes.</p></div><a class="btn btn-gold" href="/devis">Présenter mon projet <svg class="ic"><use href="/static/img/icons.svg#arrow"/></svg></a></div></section>
+<footer class="site-footer"><div class="container footer-grid"><div class="footer-intro"><a href="/"><img src="/static/img/logo-light.svg" alt="TGCA SARL.AU" width="220" height="68"></a><p>Une approche exigeante de la construction et de l'immobilier au Maroc, du projet à sa concrétisation.</p><span class="footer-pill">Construire avec ambition.</span></div>
+<div><h3>Navigation</h3><a href="/entreprise">À propos</a><a href="/expertises">Nos expertises</a><a href="/realisations">Projets & inspirations</a><a href="/contact">Contact</a></div>
+<div><h3>Nos métiers</h3><a href="/expertises#construction">Construction de bâtiments</a><a href="/expertises#immeubles">Immeubles</a><a href="/expertises#villas">Villas haut standing</a><a href="/expertises#appartements">Appartements</a></div>
+<div><h3>Nous contacter</h3><p class="footer-info"><svg class="ic"><use href="/static/img/icons.svg#map-pin"/></svg><span>N° 520, Route de Kénitra, Km 7<br>Salé, Maroc</span></p><a class="footer-info" href="tel:+212537896070"><svg class="ic"><use href="/static/img/icons.svg#phone"/></svg>05 37 89 60 70</a><a class="footer-info" href="tel:+212661258515"><svg class="ic"><use href="/static/img/icons.svg#phone"/></svg>06 61 25 85 15</a></div>
+</div><div class="container footer-bottom"><span>© {{ year }} TGCA SARL.AU — Tous droits réservés</span><div><a href="/mentions-legales">Mentions légales</a><a href="/confidentialite">Confidentialité</a><a href="/connexion">Accès sécurisé</a></div></div></footer>
+{% endif %}
+<script src="/static/js/main.js" defer></script>
+</body></html>
