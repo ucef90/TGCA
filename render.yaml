@@ -1,17 +1,20 @@
+# Demonstration gratuite : application FastAPI complète.
+# IMPORTANT : le plan Render gratuit a un disque éphémère.
+# Les devis, fichiers, projets et comptes créés en SQLite peuvent disparaître.
+# Pour un usage client réel : base et stockage persistants, SMTP et sauvegardes.
 services:
   - type: web
-    name: tgca-api
+    name: tgca-construction
     runtime: python
     plan: free
-    rootDir: backend
+    rootDir: fullstack
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
-    healthCheckPath: /api/health
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT --proxy-headers
+    healthCheckPath: /health
     envVars:
-      - key: TGCA_ADMIN_TOKEN
+      - key: ENVIRONMENT
+        value: production
+      - key: SESSION_SECRET
         generateValue: true
-      - key: TGCA_SITE_ORIGINS
-        value: https://raw.githack.com,https://rawcdn.githack.com,https://ucef90.github.io
-# ATTENTION: Render gratuit a un disque éphémère : SQLite n'est PAS
-# persistant après veille/redeploy. Pour l'utilisation commerciale,
-# connecter un stockage persistant et une adresse SMTP configurée.
+      - key: TGCA_DATA_DIR
+        value: /opt/render/project/src/data
