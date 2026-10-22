@@ -2,6 +2,17 @@
 
 **Projet développé pour TGCA SARL.AU (Maroc)**. Identité visuelle bleu marine et or, site vitrine responsive, back-office sécurisé, demandes de devis et espace client de suivi de projets.
 
+## Mise à jour du 22 octobre 2026
+
+Voir `CHANGELOG.md` pour le détail : clé secrète faible refusée en production, pages d'erreur en HTML, formulaire de devis qui conserve la saisie, administration complétée (suppressions, export CSV, réinitialisation de mot de passe, journal), barre d'appel mobile, en-tête fixe, logo corrigé, SEO renforcé.
+
+## Rubrique : plans 3D
+
+- `/plans-3d` : galerie filtrable avec 4 schémas architecturaux isométriques et illustratifs.
+- `/plans-3d/<identifiant>` : fiche de chaque plan, pièces, liens et téléchargement PNG.
+- Sources SVG modifiables dans `static/img/plans3d/` et générateur dans `scripts/generate_plans_3d.py`.
+- Ces illustrations sont des schémas conceptuels et ne constituent pas des plans techniques ou une validation de permis.
+
 ## Fonctionnalités livrées
 
 | Public | Administration | Espace client |
@@ -22,7 +33,7 @@ Les images livrées avec le site sont des **illustrations architecturales** ; el
 ### Mac / Linux
 
 ```bash
-cd TGCA-site-web
+cd TGCA_Site_Professionnel_2026
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -40,7 +51,7 @@ uvicorn app:app --host 127.0.0.1 --port 8000 --reload
 ### Windows (PowerShell)
 
 ```powershell
-cd TGCA-site-web
+cd TGCA_Site_Professionnel_2026
 py -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
@@ -61,12 +72,14 @@ Ouvrir **http://127.0.0.1:8000**. Les accès se trouvent sur `/connexion`, `/adm
 
 1. Créer votre **compte administrateur** avec `python scripts/create_admin.py`.
 2. Se connecter sur `/connexion`.
-3. Consulter les messages entrants dans **Demandes** : le formulaire public enregistre automatiquement les demandes.
-4. Créer un **compte client** (avec mot de passe robuste de 12 caractères au minimum).
+3. Consulter les messages entrants dans **Demandes** : filtrer par statut, exporter en CSV (ouvrable dans Excel).
+4. Créer un **compte client** (mot de passe de 12 caractères minimum). Le menu « Gérer » permet de réinitialiser son mot de passe ou de supprimer l'accès ; le client peut changer son mot de passe depuis son espace.
 5. Créer un **projet**, l'affecter au client, définir son statut et son avancement.
 6. Ajouter des **tâches** et des **documents** à partir de la fiche projet.
 7. Le client voit exclusivement ses propres projets depuis son espace client.
-8. Dans **Galerie**, créer des contenus avec une image illustrative ou une photo réelle, et masquer/publier les fiches.
+8. Dans **Galerie**, créer des contenus avec une image illustrative ou une photo réelle, masquer/publier ou supprimer les fiches.
+9. Depuis la fiche projet : supprimer un document ou le projet entier (zone « Supprimer ce projet »).
+10. La section **Journal** affiche les dernières actions effectuées.
 
 Une notification e-mail des devis est **facultative** : elle nécessite un serveur SMTP configuré. Sans SMTP, aucune demande n'est perdue : elles restent accessibles dans le back-office.
 
@@ -86,9 +99,10 @@ Les données SQLite et fichiers sont persistés dans le volume `tgca_data`. Pour
 
 | Paramètre | Description |
 |---|---|
-| `SESSION_SECRET` | Secret de signature des sessions (obligatoire en production) |
+| `SESSION_SECRET` | Secret de signature des sessions. **Obligatoire en production, 32 caractères minimum** : l'application refuse de démarrer avec la valeur d'exemple ou une clé trop courte |
 | `ENVIRONMENT=production` | Cookies HTTPS et HSTS, exigence d'un secret |
-| `SITE_URL` | URL absolue du site (utilisée dans le sitemap) |
+| `SITE_URL` | URL publique du site (canonical, sitemap, robots.txt, Open Graph) |
+| `WHATSAPP_NUMBER` | Active le bouton WhatsApp. Valeur confirmée : `212661258515` (06 61 25 85 15). Laisser vide pour masquer le bouton |
 | `TGCA_DATA_DIR` | Dossier SQLite et fichiers |
 | `ALLOWED_HOSTS` | Liste de domaines autorisés, séparés par des virgules |
 | `NOTIFICATION_EMAIL` | Adresse destinataire des formulaires |
@@ -98,14 +112,14 @@ Les données SQLite et fichiers sont persistés dans le volume `tgca_data`. Pour
 ## Structure du projet
 
 ```text
-TGCA-site-web/
+TGCA_Site_Professionnel_2026/
 ├── app.py                   Application FastAPI, services et routes
 ├── templates/               Pages publiques et privées en Jinja2
 ├── static/css/style.css     Design responsive
 ├── static/js/main.js        Menu mobile et interactions
 ├── static/img/              Logos SVG et images d'illustration locales
 ├── scripts/create_admin.py  Création d'un administrateur
-├── tests/test_app.py        Tests HTTP, base, permissions et sécurité
+├── tests/                   Tests HTTP, base, permissions et sécurité (38 tests)
 ├── requirements.txt
 ├── Dockerfile
 ├── docker-compose.yml
@@ -140,10 +154,10 @@ TGCA-site-web/
 ## Tests
 
 ```bash
-python -m pytest -q tests/test_app.py
+python -m pytest -q tests
 ```
 
-Dans l'environnement de création, 17 tests automatisés ont réussi le 22 octobre 2026 ; les tests peuvent être relancés après installation de `pytest` et `httpx` pour un environnement vierge :
+38 tests automatisés réussis le 22 octobre 2026 (installation vierge, Python 3.13). Pour un environnement neuf, installer d'abord :
 
 ```bash
 pip install pytest httpx
@@ -160,3 +174,10 @@ Les nouvelles images 3D (riad, villas, immeubles et appartements) sont intégré
 ## Attention au plan d'hébergement gratuit
 
 Un plan gratuit Render sans disque persistant **ne permet pas de conserver de manière fiable les demandes enregistrées dans SQLite** : les données peuvent disparaître lors d'un redémarrage, d'un déploiement ou d'une mise en veille. Pour la mise en production du formulaire, utiliser un service avec stockage SQL persistant et sauvegardes, et configurer SMTP. La vitrine statique est disponible indépendamment sur GitHub ; le portail client sécurisé nécessite un serveur Python en fonctionnement.
+
+
+## État de publication au 22 octobre 2026
+Le dossier téléchargeable est **le projet dynamique complet à exécuter sur un serveur Python**.
+Le dépôt `https://github.com/ucef90/TGCA` contient une version vitrine statique plus ancienne ; sa mise à jour vers cette archive doit être effectuée séparément.
+GitHub Pages et les CDN de fichiers ne peuvent pas exécuter `FastAPI` ni conserver la base SQLite. Pour recevoir réellement les demandes, déployer ce dossier sur un serveur capable d'exécuter Python avec **stockage persistant**, puis configurer les variables d'environnement et l'email SMTP.
+La démonstration HTML autonome est une vitrine d'aperçu : elle ne soumet pas de données.

@@ -25,6 +25,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.middleware.trustedhost import TrustedHostMiddleware
+from starlette.exceptions import HTTPException as StarletteHTTPException
+import csv
+import io
 
 ROOT = Path(__file__).resolve().parent
 try:
@@ -39,13 +42,24 @@ UPLOADS.mkdir(exist_ok=True)
 PUBLIC_MEDIA = DATA_DIR / 'public_media'
 PUBLIC_MEDIA.mkdir(exist_ok=True)
 DATABASE = DATA_DIR / 'tgca.db'
-SECRET = os.getenv('SESSION_SECRET', '')
-if not SECRET:
-    SECRET = secrets.token_urlsafe(48)
-    logging.warning('SESSION_SECRET non défini : clé temporaire. Définissez-la pour une installation durable.')
 IS_PROD = os.getenv('ENVIRONMENT') == 'production'
-if IS_PROD and not os.getenv('SESSION_SECRET'):
-    raise RuntimeError('SESSION_SECRET requis en production')
+# Valeurs d'exemple ou triviales : jamais acceptées comme clé de signature.
+WEAK_SECRETS = {'', 'REMPLACER_PAR_UNE_CLE_ALEATOIRE_LONGUE', 'changeme', 'secret', 'change-me', 'test'}
+
+def secret_is_strong(value: str) -> bool:
+    return value not in WEAK_SECRETS and len(value) >= 32
+
+RAW_SECRET = os.getenv('SESSION_SECRET', '').strip()
+if IS_PROD and not secret_is_strong(RAW_SECRET):
+    raise RuntimeError('SESSION_SECRET absent, trop court (32 caractères minimum) ou laissé à sa valeur d\'exemple. '
+                       'Générez-en un avec : python -c "import secrets; print(secrets.token_urlsafe(48))"')
+if secret_is_strong(RAW_SECRET):
+    SECRET = RAW_SECRET
+else:
+    SECRET = secrets.token_urlsafe(48)
+    logging.warning('SESSION_SECRET absent ou faible : clé temporaire utilisée (sessions perdues au redémarrage).')
+SITE_URL = os.getenv('SITE_URL', '').strip().rstrip('/')
+WHATSAPP_NUMBER = re.sub(r'\D', '', os.getenv('WHATSAPP_NUMBER', ''))
 app = FastAPI(title='TGCA SARL.AU', docs_url=None if IS_PROD else '/api/docs', redoc_url=None)
 app.add_middleware(SessionMiddleware, secret_key=SECRET, same_site='lax', https_only=IS_PROD, session_cookie='tgca_session', max_age=60*60*10)
 if os.getenv('ALLOWED_HOSTS'):
@@ -56,11 +70,38 @@ templates = Jinja2Templates(directory=str(ROOT/'templates'))
 
 SERVICES = [
     dict(slug='construction', icon='building-2', title='Construction de bâtiments', desc='Réalisation de bâtiments résidentiels et professionnels, des fondations aux finitions.', img='chantier.webp'),
-    dict(slug='immeubles', icon='building', title='Immeubles résidentiels', desc='Des ensembles immobiliers contemporains pensés pour la qualité et la durabilité.', img='immeuble-premium.webp'),
-    dict(slug='villas', icon='house', title='Villas haut standing', desc='Des villas singulières, alliant architecture, confort et finitions soignées.', img='villa-piscine.webp'),
+    dict(slug='immeubles', icon='building', title='Immeubles résidentiels', desc='Des ensembles immobiliers contemporains pensés pour la qualité et la durabilité.', img='immeuble-avenue.webp'),
+    dict(slug='villas', icon='house', title='Villas haut standing', desc='Des villas singulières, alliant architecture, confort et finitions soignées.', img='villa-coucher-soleil.webp'),
     dict(slug='appartements', icon='layout-dashboard', title='Appartements moyen standing', desc='Des logements fonctionnels et bien conçus, adaptés aux besoins de chacun.', img='appartements-contemporains.webp'),
     dict(slug='chantier', icon='hard-hat', title='Suivi de chantier', desc='Coordination des intervenants, suivi des jalons et contrôle de la qualité.', img='architecture.webp'),
-    dict(slug='etudes', icon='drafting-compass', title='Études et pilotage', desc='Accompagnement, préparation technique et organisation des étapes du projet.', img='immeuble.webp'),
+    dict(slug='etudes', icon='drafting-compass', title='Études et pilotage', desc='Accompagnement, préparation technique et organisation des étapes du projet.', img='maquette-villa-3d.webp'),
+]
+
+PLANS_3D = [
+    dict(slug='villa-patio', title='Villa contemporaine avec patio', tag='Villa • Haut standing', family='villa',
+         desc='Volumes ouverts, suite parentale, séjour généreux et espace extérieur. Une distribution illustrant la fluidité des circulations.',
+         rooms=['Grand séjour', 'Cuisine ouverte', 'Suite principale', 'Chambre invités', 'Bureau / hall', 'Terrasse paysagée']),
+    dict(slug='appartement-3-chambres', title='Appartement moderne — trois chambres', tag='Appartement • Résidentiel', family='appartement',
+         desc='Un exemple de circulation fonctionnelle entre espace de vie, cuisine, salles d’eau et espaces nuit.',
+         rooms=['Salon / repas', 'Cuisine', 'Chambre 1', 'Chambre 2', 'Salle de bains', 'Chambre 3']),
+    dict(slug='riad-contemporain', title='Riad contemporain avec bassin', tag='Riad • Architecture marocaine', family='riad',
+         desc='Interprétation contemporaine du riad autour d’un patio, avec bassin, suite et espaces de réception.',
+         rooms=['Salon marocain', 'Patio central', 'Suite', 'Salon / repas', 'Bassin', 'Cuisine']),
+    dict(slug='etage-residentiel', title='Immeuble résidentiel — étage type', tag='Immeuble • Collectif', family='immeuble',
+         desc='Schéma d’organisation d’un plateau résidentiel avec logements et accès partagés.',
+         rooms=['Appartement A', 'Appartement B', 'Appartement C', 'Hall commun', 'Appartement D']),
+]
+
+PORTFOLIO_CATEGORIES=('Villa','Riad','Immeuble','Appartement','Bâtiment')
+
+# Inspirations ajoutées en octobre 2026 : insérées une seule fois (une suppression par l'admin reste définitive).
+SEED_V2=[
+    ('villa-vue-atlas','Villa panoramique, vue sur l’Atlas','Marrakech','Villa','villa-atlas.webp','Inspiration architecturale : terrasse ouverte sur la piscine à débordement, pierre naturelle, moucharabiehs et vue dégagée sur les montagnes.'),
+    ('riad-patio-bassin','Riad à patio et bassin','Marrakech','Riad','riad-patio.webp','Inspiration de riad contemporain : patio central, bassin, arcs sculptés et lanternes, dans l’esprit de l’architecture marocaine.'),
+    ('villa-palmeraie','Villa contemporaine en palmeraie','Marrakech','Villa','villa-coucher-soleil.webp','Concept de villa haut standing : volumes en pierre, grandes baies vitrées, piscine et terrasses ombragées par les palmiers.'),
+    ('residence-travertin','Résidence en pierre de travertin','Rabat','Immeuble','immeuble-avenue.webp','Inspiration d’immeuble résidentiel : façade en travertin, balcons vitrés végétalisés et rez-de-chaussée vitré sur avenue.'),
+    ('residence-jardins-cascade','Résidence et jardins en cascade','Marrakech','Appartement','residence-marrakech.webp','Illustration d’un ensemble résidentiel organisé autour de jardins méditerranéens, de bassins en cascade et d’allées piétonnes.'),
+    ('maquette-villa-patio','Maquette 3D d’une villa à patio','Salé','Villa','maquette-villa-3d.webp','Vue 3D en coupe : chambres, séjour, cuisine, piscine centrale, jardin et carport. Schéma d’inspiration, non contractuel.'),
 ]
 
 def now():
@@ -132,6 +173,11 @@ def init_db():
             ]
             c.executemany('INSERT INTO portfolio(slug,title,city,category,image,description,is_illustration,published,created_at) VALUES (?,?,?,?,?,?,1,1,?)',
                          [(*row,now()) for row in concept])
+        c.execute('CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)')
+        if not c.execute("SELECT 1 FROM meta WHERE key='seed_v2'").fetchone():
+            c.executemany('INSERT OR IGNORE INTO portfolio(slug,title,city,category,image,description,is_illustration,published,created_at) VALUES (?,?,?,?,?,?,1,1,?)',
+                          [(*row,now()) for row in SEED_V2])
+            c.execute("INSERT INTO meta(key,value) VALUES('seed_v2',?)",(now(),))
 
 init_db()
 
@@ -165,12 +211,37 @@ def check_csrf(request, submitted: str):
     if not isinstance(secret,str) or not isinstance(submitted,str) or not hmac.compare_digest(secret,submitted):
         raise HTTPException(status_code=403, detail='Formulaire expiré. Rechargez la page et réessayez.')
 
-def render(request, name, **data):
+def site_url(request) -> str:
+    return SITE_URL or str(request.base_url).rstrip('/')
+
+def render(request, name, status_code=200, **data):
+    root = site_url(request)
     base = dict(request=request, user=get_user(request), csrf=csrf_token(request), year=datetime.now().year,
-                services=SERVICES, title='TGCA SARL.AU | Construction au Maroc', description='TGCA SARL.AU : construction de bâtiments, immeubles, appartements et villas au Maroc. Études, réalisation et suivi de chantier.', current=request.url.path)
+                services=SERVICES, title='TGCA SARL.AU | Construction au Maroc', description='TGCA SARL.AU : construction de bâtiments, immeubles, appartements et villas au Maroc. Études, réalisation et suivi de chantier.', current=request.url.path,
+                site_url=root, canonical=root+request.url.path, whatsapp=WHATSAPP_NUMBER, form={}, private=False)
     base.update(data)
-    base['csp_nonce']=request.state.csp_nonce
-    return templates.TemplateResponse(request, name, base)
+    base['csp_nonce']=getattr(request.state,'csp_nonce','')
+    return templates.TemplateResponse(request, name, base, status_code=status_code)
+
+ERROR_TEXTS = {
+    400: ('Demande incomplète', 'Certaines informations envoyées ne sont pas valides.'),
+    403: ('Accès non autorisé', 'Vous n\'avez pas accès à cette page, ou le formulaire a expiré.'),
+    404: ('Page introuvable', 'La page demandée n\'existe pas ou a été déplacée.'),
+    409: ('Conflit', 'Cette information existe déjà.'),
+    413: ('Fichier trop volumineux', 'Le fichier dépasse la taille autorisée.'),
+    429: ('Trop de tentatives', 'Merci de patienter quelques minutes avant de réessayer.'),
+}
+
+@app.exception_handler(HTTPException)
+@app.exception_handler(StarletteHTTPException)
+async def html_errors(request: Request, exc):
+    if 300 <= exc.status_code < 400 and exc.headers and 'Location' in exc.headers:
+        return RedirectResponse(exc.headers['Location'], exc.status_code)
+    heading, text = ERROR_TEXTS.get(exc.status_code, ('Une erreur est survenue', 'Veuillez réessayer.'))
+    detail = exc.detail if isinstance(exc.detail, str) and exc.detail not in ('Not Found', 'Forbidden', 'Bad Request') else ''
+    private = request.url.path.startswith(('/admin', '/espace-client', '/documents', '/mon-compte'))
+    return render(request, 'error.html', status_code=exc.status_code, code=exc.status_code, heading=heading,
+                  text=detail or text, private=private, title=f'{heading} | TGCA SARL.AU')
 
 def require_role(request, role='admin'):
     user=get_user(request)
@@ -211,7 +282,7 @@ def expertises(request:Request):
 @app.get('/realisations',response_class=HTMLResponse)
 def realisations(request:Request,category:str='Tous'):
     with db() as c:
-        if category in ('Villa','Immeuble','Appartement','Bâtiment'):
+        if category in PORTFOLIO_CATEGORIES:
             rows=c.execute('SELECT * FROM portfolio WHERE published=1 AND category=? ORDER BY is_illustration ASC,id DESC',(category,)).fetchall()
         else:
             rows=c.execute('SELECT * FROM portfolio WHERE published=1 ORDER BY is_illustration ASC,id DESC').fetchall()
@@ -222,6 +293,23 @@ def realisation(request:Request,slug:str):
     with db() as c: item=c.execute('SELECT * FROM portfolio WHERE slug=? AND published=1',(slug,)).fetchone()
     if not item: raise HTTPException(404,'Projet introuvable')
     return render(request,'portfolio_detail.html',item=dict(item),title=str(item['title'])+' | TGCA SARL.AU')
+
+@app.get('/plans-3d',response_class=HTMLResponse)
+def plans_3d(request:Request, categorie:str='tous'):
+    cats={'tous','villa','appartement','riad','immeuble'}
+    categorie=categorie if categorie in cats else 'tous'
+    plans=[p for p in PLANS_3D if categorie=='tous' or p['family']==categorie]
+    return render(request,'plans_3d.html',plans=plans,hide_cta=True,selected=categorie,
+                  title='Plans 3D : villas, appartements et immeubles | TGCA',
+                  description='Découvrez les plans 3D isométriques de villas, appartements, riads et immeubles imaginés pour vos projets au Maroc.')
+
+@app.get('/plans-3d/{slug}',response_class=HTMLResponse)
+def plan_3d_detail(request:Request,slug:str):
+    plan=next((p for p in PLANS_3D if p['slug']==slug),None)
+    if plan is None: raise HTTPException(status_code=404,detail='Plan introuvable')
+    return render(request,'plan_3d_detail.html',plan=plan,
+                  title=plan['title']+' | Plan 3D TGCA',
+                  description=plan['desc'])
 
 @app.get('/devis',response_class=HTMLResponse)
 def devis(request:Request):
@@ -252,8 +340,16 @@ def contact_submit(request:Request,csrf:str=Form(''),name:str=Form(''),email:str
         raise HTTPException(429,'Trop de demandes, veuillez réessayer ultérieurement.')
     name=name.strip(); email=email.strip().lower(); phone=phone.strip(); message=message.strip()
     valid_email=bool(re.fullmatch(r'[^\s@]{1,100}@[^\s@]{1,100}\.[^\s@]{2,30}',email))
-    if not (2<=len(name)<=120 and valid_email and 6<=len(phone)<=35 and 10<=len(message)<=4000 and consent=='yes'):
-        return render(request,'contact.html',quote=True,error='Vérifiez les champs obligatoires et acceptez le traitement de votre demande.',title='Demander un devis | TGCA SARL.AU')
+    errors={}
+    if not 2<=len(name)<=120: errors['name']='Indiquez votre nom (2 caractères minimum).'
+    if not valid_email: errors['email']='Adresse e-mail invalide.'
+    if not (6<=len(phone)<=35 and len(re.sub(r'\D','',phone))>=6): errors['phone']='Numéro de téléphone invalide.'
+    if not 10<=len(message)<=4000: errors['message']='Décrivez votre projet en quelques mots (10 caractères minimum).'
+    if consent!='yes': errors['consent']='Votre accord est nécessaire pour traiter la demande.'
+    if errors:
+        form=dict(name=name,email=email,phone=phone,project_type=project_type,city=city,budget=budget,message=message)
+        return render(request,'contact.html',status_code=422,quote=True,errors=errors,form=form,
+                      error='Certains champs sont à corriger : ils sont signalés ci-dessous.',title='Demander un devis | TGCA SARL.AU')
     with db() as c:
         c.execute('INSERT INTO leads(name,email,phone,project_type,city,budget,message,consent,created_at) VALUES(?,?,?,?,?,?,?,?,?)',
                   (name,email,phone,project_type[:100],city[:100],budget[:80],message,1,now()))
@@ -283,12 +379,14 @@ def legal(request:Request): return render(request,'legal.html',title='Mentions l
 def privacy(request:Request): return render(request,'privacy.html',title='Confidentialité | TGCA SARL.AU')
 
 @app.get('/robots.txt',response_class=PlainTextResponse)
-def robots(): return 'User-agent: *\nDisallow: /admin\nDisallow: /espace-client\nDisallow: /connexion\nSitemap: /sitemap.xml\n'
+def robots(request:Request):
+    return f'User-agent: *\nDisallow: /admin\nDisallow: /espace-client\nDisallow: /connexion\nDisallow: /mon-compte\nDisallow: /documents\nSitemap: {site_url(request)}/sitemap.xml\n'
 
 @app.get('/sitemap.xml')
 def sitemap(request:Request):
-    base=os.getenv('SITE_URL',str(request.base_url).rstrip('/'))
-    urls=['/','/entreprise','/expertises','/realisations','/contact','/devis','/mentions-legales','/confidentialite']
+    base=site_url(request)
+    urls=['/','/entreprise','/expertises','/realisations','/plans-3d','/contact','/devis','/mentions-legales','/confidentialite']
+    urls += ['/plans-3d/'+p['slug'] for p in PLANS_3D]
     with db() as c: urls += ['/realisations/'+x['slug'] for x in c.execute('SELECT slug FROM portfolio WHERE published=1')]
     xml='<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+base+u+'</loc></url>' for u in urls)+'</urlset>'
     return Response(xml,media_type='application/xml')
@@ -297,7 +395,7 @@ def sitemap(request:Request):
 def login(request:Request,next:str=''):
     if get_user(request): return RedirectResponse('/admin' if get_user(request)['role']=='admin' else '/espace-client',303)
     next = next if next.startswith('/') and not next.startswith('//') else ''
-    return render(request,'login.html',next=next,title='Connexion sécurisée | TGCA')
+    return render(request,'login.html',private=True,next=next,title='Connexion sécurisée | TGCA')
 
 @app.post('/connexion')
 def login_post(request:Request,csrf:str=Form(''),email:str=Form(''),password:str=Form(''),next:str=Form('')):
@@ -309,7 +407,7 @@ def login_post(request:Request,csrf:str=Form(''),email:str=Form(''),password:str
     with db() as c: row=c.execute('SELECT * FROM users WHERE email=?',(email.strip().lower(),)).fetchone()
     if not row or not verify_password(password,row['password_hash']):
         tries.append(current); _auth_limits[ip]=tries
-        return render(request,'login.html',error='Identifiants invalides.',next='',title='Connexion | TGCA',status_code=200)
+        return render(request,'login.html',private=True,error='Identifiants invalides.',next='',title='Connexion | TGCA',status_code=200)
     _auth_limits.pop(ip,None)
     request.session.clear(); request.session['uid']=int(row['id'])
     path=next if next.startswith('/') and not next.startswith('//') else ('/admin' if row['role']=='admin' else '/espace-client')
@@ -330,18 +428,116 @@ def client_portal(request:Request):
         for p in projects:
             p['tasks']=[dict(t) for t in c.execute('SELECT * FROM tasks WHERE project_id=? ORDER BY id',(p['id'],))]
             p['attachments']=[dict(a) for a in c.execute('SELECT * FROM attachments WHERE project_id=? ORDER BY id',(p['id'],))]
-    return render(request,'client.html',projects=projects,title='Mes projets | TGCA SARL.AU')
+    return render(request,'client.html',projects=projects,private=True,pw_ok=request.query_params.get('mdp')=='ok',title='Mes projets | TGCA SARL.AU')
+
+LEAD_STATUSES=('nouveau','en cours','traité','archivé')
+
+def gallery_images():
+    return sorted(p.name for p in (ROOT/'static'/'img').glob('*.webp'))
 
 @app.get('/admin',response_class=HTMLResponse)
-def admin(request:Request):
+def admin(request:Request,statut:str=''):
     require_role(request)
+    statut=statut if statut in LEAD_STATUSES else ''
     with db() as c:
         counts=dict(leads=c.execute('SELECT COUNT(*) n FROM leads').fetchone()['n'],new=c.execute("SELECT COUNT(*) n FROM leads WHERE status='nouveau'").fetchone()['n'],projects=c.execute('SELECT COUNT(*) n FROM projects').fetchone()['n'],customers=c.execute("SELECT COUNT(*) n FROM users WHERE role='client'").fetchone()['n'])
-        leads=[dict(x) for x in c.execute('SELECT * FROM leads ORDER BY id DESC LIMIT 25')]
-        projects=[dict(x) for x in c.execute('SELECT p.*,u.name client_name FROM projects p LEFT JOIN users u ON p.client_id=u.id ORDER BY p.updated_at DESC LIMIT 25')]
-        customers=[dict(x) for x in c.execute("SELECT id,name,email FROM users WHERE role='client' ORDER BY id DESC")]
+        if statut:
+            leads=[dict(x) for x in c.execute('SELECT * FROM leads WHERE status=? ORDER BY id DESC LIMIT 100',(statut,))]
+        else:
+            leads=[dict(x) for x in c.execute("SELECT * FROM leads WHERE status!='archivé' ORDER BY id DESC LIMIT 100")]
+        projects=[dict(x) for x in c.execute('SELECT p.*,u.name client_name FROM projects p LEFT JOIN users u ON p.client_id=u.id ORDER BY p.updated_at DESC LIMIT 50')]
+        customers=[dict(x) for x in c.execute("SELECT u.id,u.name,u.email,(SELECT COUNT(*) FROM projects p WHERE p.client_id=u.id) nb FROM users u WHERE role='client' ORDER BY id DESC")]
         portfolio=[dict(x) for x in c.execute('SELECT * FROM portfolio ORDER BY id DESC')]
-    return render(request,'admin.html',counts=counts,leads=leads,projects=projects,customers=customers,entries=portfolio,title='Administration | TGCA')
+        activity=[dict(x) for x in c.execute('SELECT a.*,u.name actor FROM activity a LEFT JOIN users u ON u.id=a.actor_id ORDER BY a.id DESC LIMIT 12')]
+    return render(request,'admin.html',counts=counts,leads=leads,projects=projects,customers=customers,entries=portfolio,activity=activity,
+                  statut=statut,statuses=LEAD_STATUSES,images=gallery_images(),msg=request.query_params.get('msg',''),private=True,title='Administration | TGCA')
+
+def _csv_safe(value):
+    text='' if value is None else str(value)
+    return "'"+text if text[:1] in ('=','+','-','@','\t','\r') else text
+
+@app.get('/admin/demandes.csv')
+def export_leads(request:Request):
+    admin=require_role(request)
+    buf=io.StringIO(); buf.write('﻿')
+    w=csv.writer(buf,delimiter=';')
+    w.writerow(['Date','Nom','Email','Téléphone','Type de projet','Ville','Budget','Message','Statut'])
+    with db() as c:
+        for l in c.execute('SELECT * FROM leads ORDER BY id DESC'):
+            w.writerow([_csv_safe(l[k]) for k in ('created_at','name','email','phone','project_type','city','budget','message','status')])
+    audit(admin['id'],'export','leads',0)
+    name='TGCA-demandes-'+datetime.now().strftime('%Y-%m-%d')+'.csv'
+    return Response(buf.getvalue(),media_type='text/csv; charset=utf-8',headers={'Content-Disposition':f'attachment; filename="{name}"','Cache-Control':'no-store'})
+
+@app.post('/admin/clients/{client_id}/password')
+def reset_client_password(request:Request,client_id:int,csrf:str=Form(''),password:str=Form('')):
+    admin=require_role(request); check_csrf(request,csrf)
+    if len(password)<12: raise HTTPException(400,'Mot de passe de 12 caractères minimum requis.')
+    with db() as c:
+        cur=c.execute("UPDATE users SET password_hash=? WHERE id=? AND role='client'",(password_hash(password),client_id))
+        if not cur.rowcount: raise HTTPException(404,'Client introuvable')
+    audit(admin['id'],'réinitialisation mot de passe','client',client_id)
+    return RedirectResponse('/admin?msg=mdp#clients',303)
+
+@app.post('/admin/clients/{client_id}/delete')
+def delete_client(request:Request,client_id:int,csrf:str=Form('')):
+    admin=require_role(request); check_csrf(request,csrf)
+    with db() as c:
+        if not c.execute("SELECT id FROM users WHERE id=? AND role='client'",(client_id,)).fetchone(): raise HTTPException(404,'Client introuvable')
+        c.execute('UPDATE projects SET client_id=NULL WHERE client_id=?',(client_id,))
+        c.execute('UPDATE activity SET actor_id=NULL WHERE actor_id=?',(client_id,))
+        c.execute('DELETE FROM users WHERE id=?',(client_id,))
+    audit(admin['id'],'suppression','client',client_id)
+    return RedirectResponse('/admin?msg=client#clients',303)
+
+def _remove_upload(stored_name):
+    try: (UPLOADS/Path(stored_name).name).unlink(missing_ok=True)
+    except OSError: logging.exception('Suppression de fichier impossible')
+
+@app.post('/admin/projets/{project_id}/delete')
+def delete_project(request:Request,project_id:int,csrf:str=Form('')):
+    admin=require_role(request); check_csrf(request,csrf)
+    with db() as c:
+        if not c.execute('SELECT id FROM projects WHERE id=?',(project_id,)).fetchone(): raise HTTPException(404,'Projet introuvable')
+        files=[r['stored_name'] for r in c.execute('SELECT stored_name FROM attachments WHERE project_id=?',(project_id,))]
+        c.execute('DELETE FROM projects WHERE id=?',(project_id,))
+    for f in files: _remove_upload(f)
+    audit(admin['id'],'suppression','projet',project_id)
+    return RedirectResponse('/admin?msg=projet#projets',303)
+
+@app.post('/admin/documents/{file_id}/delete')
+def delete_document(request:Request,file_id:int,csrf:str=Form('')):
+    admin=require_role(request); check_csrf(request,csrf)
+    with db() as c:
+        doc=c.execute('SELECT project_id,stored_name FROM attachments WHERE id=?',(file_id,)).fetchone()
+        if not doc: raise HTTPException(404,'Document introuvable')
+        c.execute('DELETE FROM attachments WHERE id=?',(file_id,))
+        c.execute('UPDATE projects SET updated_at=? WHERE id=?',(now(),doc['project_id']))
+    _remove_upload(doc['stored_name'])
+    audit(admin['id'],'suppression','document',file_id)
+    return RedirectResponse(f'/admin/projets/{doc["project_id"]}#documents',303)
+
+@app.get('/mon-compte/mot-de-passe',response_class=HTMLResponse)
+def password_page(request:Request):
+    user=get_user(request)
+    if not user: return RedirectResponse('/connexion?next=/mon-compte/mot-de-passe',303)
+    return render(request,'password.html',private=True,title='Changer mon mot de passe | TGCA')
+
+@app.post('/mon-compte/mot-de-passe')
+def password_change(request:Request,csrf:str=Form(''),current:str=Form(''),new:str=Form(''),confirm:str=Form('')):
+    user=get_user(request)
+    if not user: raise HTTPException(403)
+    check_csrf(request,csrf)
+    with db() as c: row=c.execute('SELECT password_hash FROM users WHERE id=?',(user['id'],)).fetchone()
+    error=''
+    if not verify_password(current,row['password_hash']): error='Le mot de passe actuel est incorrect.'
+    elif len(new)<12: error='Le nouveau mot de passe doit contenir au moins 12 caractères.'
+    elif new!=confirm: error='Les deux nouveaux mots de passe ne correspondent pas.'
+    elif new==current: error='Choisissez un mot de passe différent de l\'actuel.'
+    if error: return render(request,'password.html',status_code=422,error=error,private=True,title='Changer mon mot de passe | TGCA')
+    with db() as c: c.execute('UPDATE users SET password_hash=? WHERE id=?',(password_hash(new),user['id']))
+    audit(user['id'],'changement mot de passe','utilisateur',user['id'])
+    return RedirectResponse(('/admin?msg=mdp' if user['role']=='admin' else '/espace-client?mdp=ok'),303)
 
 @app.post('/admin/leads/{lead_id}/status')
 def lead_status(request:Request,lead_id:int,csrf:str=Form(''),status:str=Form('')):
@@ -392,7 +588,7 @@ def edit_project(request:Request,project_id:int):
         tasks=[dict(x) for x in c.execute('SELECT * FROM tasks WHERE project_id=? ORDER BY id',(project_id,))]
         files=[dict(x) for x in c.execute('SELECT * FROM attachments WHERE project_id=? ORDER BY id',(project_id,))]
         users=[dict(x) for x in c.execute("SELECT id,name,email FROM users WHERE role='client' ORDER BY name")]
-    return render(request,'project_edit.html',p=dict(p),tasks=tasks,files=files,customers=users,title='Suivi de projet | TGCA')
+    return render(request,'project_edit.html',p=dict(p),tasks=tasks,files=files,customers=users,private=True,title='Suivi de projet | TGCA')
 
 @app.post('/admin/projets/{project_id}')
 def update_project(request:Request,project_id:int,csrf:str=Form(''),title:str=Form(''),description:str=Form(''),status:str=Form(''),progress:int=Form(0),client_id:str=Form(''),location:str=Form(''),due_date:str=Form('')):
@@ -474,7 +670,8 @@ def download_attachment(request:Request,file_id:int):
 @app.post('/admin/portfolio')
 async def create_portfolio(request:Request,csrf:str=Form(''),title:str=Form(''),city:str=Form(''),category:str=Form(''),description:str=Form(''),image:str=Form(''),is_illustration:str=Form(''),photo:UploadFile|None=File(None)):
     admin=require_role(request);check_csrf(request,csrf)
-    approved={'villa-moderne.webp','residence.webp','immeuble.webp','appartements.webp','villa-jardin.webp','residence-urbaine.webp','chantier.webp'}
+    approved=set(gallery_images())
+    if category not in PORTFOLIO_CATEGORIES: category='Bâtiment'
     if not title.strip() or (image not in approved and not (photo and photo.filename)): raise HTTPException(400,'Titre et image sont requis')
     if photo and photo.filename:
         if photo.content_type not in ('image/jpeg','image/png','image/webp'):
@@ -504,6 +701,19 @@ def toggle_portfolio(request:Request,entry_id:int,csrf:str=Form('')):
         if not cur.rowcount: raise HTTPException(404)
     audit(admin['id'],'publication','portfolio',entry_id)
     return RedirectResponse('/admin#portfolio',303)
+
+@app.post('/admin/portfolio/{entry_id}/delete')
+def delete_portfolio(request:Request,entry_id:int,csrf:str=Form('')):
+    admin=require_role(request);check_csrf(request,csrf)
+    with db() as c:
+        row=c.execute('SELECT image FROM portfolio WHERE id=?',(entry_id,)).fetchone()
+        if not row: raise HTTPException(404,'Contenu introuvable')
+        c.execute('DELETE FROM portfolio WHERE id=?',(entry_id,))
+    if row['image'].startswith('upload/'):
+        try: (PUBLIC_MEDIA/Path(row['image'][7:]).name).unlink(missing_ok=True)
+        except OSError: logging.exception('Suppression de la photo impossible')
+    audit(admin['id'],'suppression','portfolio',entry_id)
+    return RedirectResponse('/admin?msg=galerie#portfolio',303)
 
 @app.get('/health',response_class=PlainTextResponse)
 def health(): return 'ok'

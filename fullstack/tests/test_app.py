@@ -46,7 +46,10 @@ def test_contact_form_saved_and_escaped(client):
 def test_contact_validation(client):
     token=csrf(client)
     r=client.post('/contact',data={'csrf':token,'name':'A','email':'a@b.ma','phone':'1234','message':'tiny','consent':''})
-    assert r.status_code==200 and 'Vérifiez' in r.text
+    assert r.status_code==422 and 'corriger' in r.text
+    # La saisie est conservée et chaque champ fautif est signalé.
+    assert 'value="a@b.ma"' in r.text and '>tiny</textarea>' in r.text
+    assert 'aria-invalid="true"' in r.text and 'Numéro de téléphone invalide' in r.text
     with site.db() as c: assert c.execute('SELECT COUNT(*) n FROM leads').fetchone()['n']==0
 
 def test_access_control(client):

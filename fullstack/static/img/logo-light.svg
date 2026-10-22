@@ -3,7 +3,6 @@
 <path d="M20 60V27l17-11v44M42 60V9l19-7v58M65 60V22l17 10v28M87 60V37l12-8v31" fill="none" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
 <path d="M20 27L37 16V60M42 9L61 2v58M65 22l17 10v28M87 37l12-8" stroke="#daa94f" stroke-width="2" fill="none"/>
 <path d="M12 68Q55 53 105 68" stroke="#daa94f" stroke-width="3" fill="none"/>
-<text x="119" y="57" font-family="Arial,Helvetica,sans-serif" font-size="52" font-weight="800" letter-spacing="-2" fill="#fff">TGC</text>
-<text x="234" y="57" font-family="Arial,Helvetica,sans-serif" font-size="52" font-weight="800" letter-spacing="-2" fill="#daa94f">A</text>
+<text x="119" y="57" font-family="Arial,Helvetica,sans-serif" font-size="52" font-weight="800" letter-spacing="-1" fill="#fff">TGC<tspan fill="#daa94f">A</tspan></text>
 <text x="120" y="76" font-family="Arial,Helvetica,sans-serif" font-size="14" letter-spacing="5.5" fill="#cedae5">SARL.AU</text>
 </svg>

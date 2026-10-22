@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="section-pad plan-detail-page"><div class="container"><a class="text-link" href="/plans-3d">← Tous les plans 3D</a><div class="plan-detail-head"><div><span class="eyebrow">{{ plan.tag }} · Vue isométrique</span><h1>{{ plan.title }}</h1><p>{{ plan.desc }}</p></div><a class="btn btn-gold" href="/devis">Étudier un projet similaire →</a></div>
+<div class="plan-large"><img src="/static/img/plans3d/{{ plan.slug }}.svg" alt="Plan isométrique : {{ plan.title }}"><a href="/static/img/plans3d/{{ plan.slug }}.png" class="plan-download" download="TGCA-{{ plan.slug }}.png">↓ Télécharger cette illustration</a></div>
+<div class="plan-detail-grid"><div><h2>Organisation des espaces</h2><p>Cette proposition illustre une façon de répartir les principaux usages. Les matériaux, dimensions, circulations et exigences structurelles doivent être précisés par les professionnels chargés du projet.</p><a class="btn btn-outline-dark" href="/contact">Contacter TGCA →</a></div><div><h3>Espaces illustrés</h3><ul class="plan-room-list">{% for name in plan.rooms %}<li>{{ name }}</li>{% endfor %}</ul></div></div>
+<p class="plans-disclaimer">Illustration architecturale conceptuelle et non contractuelle. Aucune surface exacte n'est garantie et ce visuel ne remplace pas un plan technique établi par un architecte ou ingénieur compétent.</p></div></section>
+{% endblock %}

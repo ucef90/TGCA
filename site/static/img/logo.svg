@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 342 93" role="img" aria-labelledby="t d">
+<title id="t">TGCA SARL.AU</title><desc id="d">Logo de TGCA, silhouette de bâtiments et lettrage bleu marine et or</desc>
+<path d="M7 65H106" fill="none" stroke="#c79848" stroke-width="3"/>
+<path d="M20 60V27l17-11v44M42 60V9l19-7v58M65 60V22l17 10v28M87 60V37l12-8v31" fill="none" stroke="#0d2946" stroke-width="5" stroke-linejoin="round"/>
+<path d="M20 27L37 16V60M42 9L61 2v58M65 22l17 10v28M87 37l12-8" stroke="#b98736" stroke-width="2" fill="none"/>
+<path d="M12 68Q55 53 105 68" stroke="#b98736" stroke-width="3" fill="none"/>
+<text x="119" y="57" font-family="Arial,Helvetica,sans-serif" font-size="52" font-weight="800" letter-spacing="-1" fill="#0d2946">TGC<tspan fill="#bd8b3b">A</tspan></text>
+<text x="120" y="76" font-family="Arial,Helvetica,sans-serif" font-size="14" letter-spacing="5.5" fill="#506477">SARL.AU</text>
+</svg>

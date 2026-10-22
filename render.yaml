@@ -18,3 +18,8 @@ services:
         generateValue: true
       - key: TGCA_DATA_DIR
         value: /opt/render/project/src/data
+      - key: WHATSAPP_NUMBER
+        value: "212661258515"
+      # À renseigner avec l'URL Render ou le domaine final (canonical, sitemap) :
+      # - key: SITE_URL
+      #   value: https://tgca-construction.onrender.com

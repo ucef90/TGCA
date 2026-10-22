@@ -1,0 +1,14 @@
+{% extends 'base.html' %}{% block content %}
+<section class="error-page"><div class="container error-inner">
+<span class="error-code">{{ code }}</span>
+<span class="eyebrow">TGCA SARL.AU</span>
+<h1>{{ heading }}</h1>
+<p>{{ text }}</p>
+<div class="error-actions">
+{% if code == 403 and not user %}<a href="/connexion" class="btn btn-gold">Se connecter <svg class="ic"><use href="/static/img/icons.svg#arrow"/></svg></a>{% endif %}
+<a href="/" class="btn {% if code == 403 and not user %}btn-outline-dark{% else %}btn-gold{% endif %}">Retour à l'accueil</a>
+{% if not private %}<a href="/devis" class="btn btn-outline-dark">Demander un devis</a>{% endif %}
+</div>
+{% if code == 404 %}<nav class="error-links" aria-label="Pages utiles"><a href="/expertises">Nos expertises</a><a href="/realisations">Projets</a><a href="/plans-3d">Plans 3D</a><a href="/contact">Contact</a></nav>{% endif %}
+</div></section>
+{% endblock %}

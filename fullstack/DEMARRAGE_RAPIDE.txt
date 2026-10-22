@@ -2,7 +2,7 @@ TGCA SARL.AU — SITE WEB ET APPLICATION DE SUIVI
 ==============================================
 
 1. Installer Python 3.11 ou plus récent.
-2. Ouvrir un terminal dans ce dossier TGCA-site-web.
+2. Ouvrir un terminal dans ce dossier TGCA_Site_Professionnel_2026.
 3. Installer les bibliothèques :
    python -m pip install -r requirements.txt
 4. Créer le compte administrateur :

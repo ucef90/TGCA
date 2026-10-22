@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 860" role="img" aria-label="Plan architectural 3D isométrique APPARTEMENT · 3 CHAMBRES">
+    <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#eff3f4"/><stop offset="1" stop-color="#e2e8e7"/></linearGradient>
+    <filter id="shadow"><feGaussianBlur stdDeviation="17"/></filter></defs>
+    <rect width="1280" height="860" rx="22" fill="url(#bg)" />
+    <circle cx="1130" cy="110" r="195" fill="#f4e6c9" opacity=".32"/><circle cx="185" cy="750" r="230" fill="#d0e2e0" opacity=".4" />
+    <text x="58" y="64" fill="#bd8a3c" font-size="16" font-weight="700" font-family="Arial" letter-spacing="3">TGCA · ARCHITECTURE &amp; CONSTRUCTION</text>
+    <text x="58" y="107" fill="#0b2a47" font-size="28" font-weight="750" font-family="Arial">APPARTEMENT · 3 CHAMBRES</text>
+    <ellipse cx="620" cy="620" rx="455" ry="100" fill="#5b6b72" opacity=".14" filter="url(#shadow)" />
+<polygon points="615,140.0 853,276.5 853,233.5 615,97.0" fill="#eee9e1" stroke="#aa9a88" stroke-width="1.5" opacity="0.9" stroke-linejoin="round" />
+<polygon points="615,140.0 411,257.0 411,214.0 615,97.0" fill="#dad4cb" stroke="#a79787" stroke-width="1.5" opacity="0.9" stroke-linejoin="round" />
+<polygon points="615,97.0 853,233.5 853,236.5 615,100.0" fill="#b39159" stroke="none" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="853,276.5 989,354.5 989,311.5 853,233.5" fill="#eee9e1" stroke="#aa9a88" stroke-width="1.5" opacity="0.9" stroke-linejoin="round" />
+<polygon points="853,276.5 649,393.5 649,350.5 853,233.5" fill="#dad4cb" stroke="#a79787" stroke-width="1.5" opacity="0.9" stroke-linejoin="round" />
+<polygon points="853,233.5 989,311.5 989,314.5 853,236.5" fill="#b39159" stroke="none" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="989,354.5 1159,452.0 1159,409.0 989,311.5" fill="#eee9e1" stroke="#aa9a88" stroke-width="1.5" opacity="0.9" stroke-linejoin="round" />
+<polygon points="989,354.5 785,471.5 785,428.5 989,311.5" fill="#dad4cb" stroke="#a79787" stroke-width="1.5" opacity="0.9" stroke-linejoin="round" />
+<polygon points="989,311.5 1159,409.0 1159,412.0 989,314.5" fill="#b39159" stroke="none" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="411,257.0 615,374.0 615,331.0 411,214.0" fill="#eee9e1" stroke="#aa9a88" stroke-width="1.5" opacity="0.9" stroke-linejoin="round" />
+<polygon points="411,257.0 207,374.0 207,331.0 411,214.0" fill="#dad4cb" stroke="#a79787" stroke-width="1.5" opacity="0.9" stroke-linejoin="round" />
+<polygon points="411,214.0 615,331.0 615,334.0 411,217.0" fill="#b39159" stroke="none" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="615,374.0 751,452.0 751,409.0 615,331.0" fill="#eee9e1" stroke="#aa9a88" stroke-width="1.5" opacity="0.9" stroke-linejoin="round" />
+<polygon points="615,374.0 411,491.0 411,448.0 615,331.0" fill="#dad4cb" stroke="#a79787" stroke-width="1.5" opacity="0.9" stroke-linejoin="round" />
+<polygon points="615,331.0 751,409.0 751,412.0 615,334.0" fill="#b39159" stroke="none" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="751,452.0 955,569.0 955,526.0 751,409.0" fill="#eee9e1" stroke="#aa9a88" stroke-width="1.5" opacity="0.9" stroke-linejoin="round" />
+<polygon points="751,452.0 547,569.0 547,526.0 751,409.0" fill="#dad4cb" stroke="#a79787" stroke-width="1.5" opacity="0.9" stroke-linejoin="round" />
+<polygon points="751,409.0 955,526.0 955,529.0 751,412.0" fill="#b39159" stroke="none" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="615,140.0 853,276.5 649,393.5 411,257.0" fill="#e9dfcc" stroke="#b9b2a5" stroke-width="2" opacity="1" stroke-linejoin="round" />
+<polygon points="674.5,174.1 470.5,291.1" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="734.0,208.2 530.0,325.2" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="793.5,242.4 589.5,359.4" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="611.6,177.1 700.0,227.8 700.0,227.2 611.6,176.5" fill="#ada69b" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="700.0,227.8 669.4,245.3 669.4,244.8 700.0,227.2" fill="#ada69b" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="611.6,176.5 700.0,227.2 669.4,244.8 581.0,194.1" fill="#f9f4e9" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="560.6,210.2 601.4,233.6 601.4,233.4 560.6,209.9" fill="#8d674b" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="601.4,233.6 567.4,253.1 567.4,252.9 601.4,233.4" fill="#8d674b" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="560.6,209.9 601.4,233.4 567.4,252.9 526.6,229.4" fill="#ad7547" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="717.0,257.0 744.2,272.6 744.2,272.1 717.0,256.5" fill="#a09a91" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="744.2,272.6 676.2,311.6 676.2,311.1 744.2,272.1" fill="#a09a91" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="717.0,256.5 744.2,272.1 676.2,311.1 649.0,295.5" fill="#e5dac9" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<text x="569.1" y="294.8" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" fill="#14304a" stroke="none" text-anchor="middle">Salon / repas</text>
+<polygon points="853,276.5 989,354.5 785,471.5 649,393.5" fill="#dfd9c9" stroke="#b9b2a5" stroke-width="2" opacity="1" stroke-linejoin="round" />
+<polygon points="887.0,296.0 683.0,413.0" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="921.0,315.5 717.0,432.5" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="955.0,335.0 751.0,452.0" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="841.1,297.0 949.9,359.4 949.9,358.7 841.1,296.3" fill="#a49a8f" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="949.9,359.4 926.1,373.0 926.1,372.3 949.9,358.7" fill="#a49a8f" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="841.1,296.3 949.9,358.7 926.1,372.3 817.3,309.9" fill="#d1bc96" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="798.6,362.3 866.6,401.3 866.6,400.6 798.6,361.6" fill="#ad9f8b" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="866.6,401.3 832.6,420.8 832.6,420.1 866.6,400.6" fill="#ad9f8b" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="798.6,361.6 866.6,400.6 832.6,420.1 764.6,381.1" fill="#f7f4eb" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<text x="756.1" y="402.1" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" fill="#14304a" stroke="none" text-anchor="middle">Cuisine</text>
+<polygon points="989,354.5 1159,452.0 955,569.0 785,471.5" fill="#e2e2d6" stroke="#b9b2a5" stroke-width="2" opacity="1" stroke-linejoin="round" />
+<polygon points="1031.5,378.9 827.5,495.9" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="1074.0,403.2 870.0,520.2" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="1116.5,427.6 912.5,544.6" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="989.0,393.5 1070.6,440.3 1070.6,439.9 989.0,393.1" fill="#c9c2b4" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="1070.6,440.3 972.0,496.9 972.0,496.5 1070.6,439.9" fill="#c9c2b4" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="989.0,393.1 1070.6,439.9 972.0,496.5 890.4,449.7" fill="#eee9df" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="992.4,399.3 1026.4,418.8 1026.4,418.3 992.4,398.8" fill="#b4a99c" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="1026.4,418.8 1006.0,430.5 1006.0,430.0 1026.4,418.3" fill="#b4a99c" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="992.4,398.8 1026.4,418.3 1006.0,430.0 972.0,410.5" fill="#fffafa" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="1029.8,420.8 1057.0,436.4 1057.0,435.9 1029.8,420.3" fill="#b4a99c" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="1057.0,436.4 1036.6,448.1 1036.6,447.6 1057.0,435.9" fill="#b4a99c" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="1029.8,420.3 1057.0,435.9 1036.6,447.6 1009.4,432.0" fill="#fffafa" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<text x="909.1" y="489.8" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" fill="#14304a" stroke="none" text-anchor="middle">Chambre 1</text>
+<polygon points="411,257.0 615,374.0 411,491.0 207,374.0" fill="#e2e2d6" stroke="#b9b2a5" stroke-width="2" opacity="1" stroke-linejoin="round" />
+<polygon points="462.0,286.2 258.0,403.2" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="513.0,315.5 309.0,432.5" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="564.0,344.8 360.0,461.8" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="411.0,296.0 492.6,342.8 492.6,342.4 411.0,295.6" fill="#c9c2b4" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="492.6,342.8 394.0,399.4 394.0,399.0 492.6,342.4" fill="#c9c2b4" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="411.0,295.6 492.6,342.4 394.0,399.0 312.4,352.2" fill="#eee9df" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="414.4,301.8 448.4,321.4 448.4,320.8 414.4,301.3" fill="#b4a99c" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="448.4,321.4 428.0,333.0 428.0,332.5 448.4,320.8" fill="#b4a99c" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="414.4,301.3 448.4,320.8 428.0,332.5 394.0,313.0" fill="#fffafa" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="451.8,323.3 479.0,338.9 479.0,338.4 451.8,322.8" fill="#b4a99c" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="479.0,338.9 458.6,350.6 458.6,350.1 479.0,338.4" fill="#b4a99c" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="451.8,322.8 479.0,338.4 458.6,350.1 431.4,334.5" fill="#fffafa" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<text x="348.1" y="402.1" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" fill="#14304a" stroke="none" text-anchor="middle">Chambre 2</text>
+<polygon points="615,374.0 751,452.0 547,569.0 411,491.0" fill="#d3e3df" stroke="#b9b2a5" stroke-width="2" opacity="1" stroke-linejoin="round" />
+<polygon points="649.0,393.5 445.0,510.5" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="683.0,413.0 479.0,530.0" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="717.0,432.5 513.0,549.5" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="604.8,403.2 676.2,444.2 676.2,443.8 604.8,402.9" fill="#a9c5c2" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="676.2,444.2 632.0,469.5 632.0,469.1 676.2,443.8" fill="#a9c5c2" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="604.8,402.9 676.2,443.8 632.0,469.1 560.6,428.2" fill="#fafafa" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<ellipse cx="567.4" cy="492.7" rx="12.0" ry="6.6" fill="#8ac1c4" stroke="#ffffff77" stroke-width="2"/>
+<text x="518.1" y="499.6" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" fill="#14304a" stroke="none" text-anchor="middle">S. de bains</text>
+<polygon points="751,452.0 955,569.0 751,686.0 547,569.0" fill="#e2e2d6" stroke="#b9b2a5" stroke-width="2" opacity="1" stroke-linejoin="round" />
+<polygon points="802.0,481.2 598.0,598.2" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="853.0,510.5 649.0,627.5" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="904.0,539.8 700.0,656.8" fill="#ffffff00" stroke="#faf7f088" stroke-width="0.8" opacity="1" stroke-linejoin="round" />
+<polygon points="751.0,491.0 832.6,537.8 832.6,537.4 751.0,490.6" fill="#c9c2b4" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="832.6,537.8 734.0,594.4 734.0,594.0 832.6,537.4" fill="#c9c2b4" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="751.0,490.6 832.6,537.4 734.0,594.0 652.4,547.1" fill="#eee9df" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="754.4,496.8 788.4,516.3 788.4,515.8 754.4,496.3" fill="#b4a99c" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="788.4,516.3 768.0,528.0 768.0,527.5 788.4,515.8" fill="#b4a99c" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="754.4,496.3 788.4,515.8 768.0,527.5 734.0,508.0" fill="#fffafa" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="791.8,518.3 819.0,533.9 819.0,533.4 791.8,517.8" fill="#b4a99c" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="819.0,533.9 798.6,545.6 798.6,545.1 819.0,533.4" fill="#b4a99c" stroke="#ffffff33" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<polygon points="791.8,517.8 819.0,533.4 798.6,545.1 771.4,529.5" fill="#fffafa" stroke="#ffffffad" stroke-width="1" opacity="1" stroke-linejoin="round" />
+<text x="688.1" y="597.1" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" fill="#14304a" stroke="none" text-anchor="middle">Chambre 3</text>
+<polygon points="615,140.0 1159,452.0 751,686.0 207,374.0" fill="none" stroke="#8e8b84" stroke-width="3" opacity="1" stroke-linejoin="round" />
+<text x="59" y="813" font-size="15" fill="#5f7080" font-family="Arial">Perspective 3D conceptuelle · non contractuelle · aménagement adaptable</text><text x="1208" y="814" text-anchor="end" font-size="15" fill="#bd8a3c" font-family="Arial" font-weight="700">TGCA SARL.AU</text></svg>

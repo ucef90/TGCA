@@ -28,3 +28,11 @@ document.querySelectorAll('form[data-form="contact"]').forEach(form=>{
     }
   });
 });
+const header=document.querySelector('.site-header');
+if(header){
+  const onScroll=()=>header.classList.toggle('is-scrolled',window.scrollY>8);
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+}
+// Premier champ en erreur : focus automatique pour corriger vite.
+const firstInvalid=document.querySelector('[aria-invalid="true"]');
+if(firstInvalid){firstInvalid.focus({preventScroll:false});}

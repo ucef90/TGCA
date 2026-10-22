@@ -32,3 +32,111 @@
 .showcase-section{background:#f4f6f7;padding:104px 0 92px}.showcase-head{display:flex;align-items:end;justify-content:space-between;gap:40px;margin-bottom:42px}.showcase-head>div{max-width:730px}.showcase-head h2{margin:14px 0 12px}.showcase-head p{max-width:670px}.showcase-head .btn{flex-shrink:0}.showcase-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-auto-rows:246px;gap:15px}.showcase-tile{margin:0;position:relative;overflow:hidden;border-radius:9px;background:#102d48}.showcase-tile img{width:100%;height:100%;object-fit:cover;transition:transform .65s}.showcase-tile:hover img{transform:scale(1.06)}.showcase-tile:after{content:"";position:absolute;inset:30% 0 0;background:linear-gradient(transparent,rgba(1,15,31,.87))}.showcase-tile figcaption{position:absolute;left:22px;right:22px;bottom:20px;color:white;z-index:1;line-height:1.3}.showcase-tile figcaption span{color:#f4c677;font-size:11px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:6px}.showcase-tile figcaption strong{font-size:19px;font-weight:740}.showcase-large{grid-row:span 2}.showcase-large figcaption strong{font-size:29px}.showcase-disclaimer{font-size:11px;margin:22px 0 0;color:#6f7e8c}.standards-section{background:#091e36;color:white}.standards-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;align-items:center}.standards-layout h2{color:white}.standards-layout>div>p{color:#c1cdd9}.standards-layout .text-link{color:#ebbb68}.standard-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:17px}.standard-cards article{padding:28px;background:#ffffff0a;border:1px solid #ffffff24;border-radius:8px}.standard-cards article span{font-size:13px;color:#e7b45a;font-weight:750}.standard-cards h3{margin:13px 0 7px;color:white}.standard-cards p{font-size:13px;color:#c4d1dd;margin:0}.faq-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:90px;align-items:start}.faq-list details{border-bottom:1px solid #dfe5e9;padding:14px 4px}.faq-list details:first-child{border-top:1px solid #dfe5e9}.faq-list summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-weight:750;padding:10px 0;color:#082748}.faq-list summary:after{content:'+';font-size:23px;color:var(--gold);font-weight:300}.faq-list details[open] summary:after{content:'−'}.faq-list details p{margin:0;padding:0 18px 13px 0}.nav-inspiration{color:#a8792a!important}
 @media(max-width:1050px){.showcase-grid{grid-template-columns:1fr 1fr;grid-auto-rows:250px}.showcase-large{grid-row:span 2}.standards-layout,.faq-layout{gap:35px}}
 @media(max-width:670px){.showcase-section{padding:62px 0}.showcase-head{display:block}.showcase-head .btn{margin-top:14px}.showcase-grid{grid-template-columns:1fr;grid-auto-rows:240px}.showcase-large{grid-row:span 1}.standards-layout,.faq-layout{grid-template-columns:1fr}.standard-cards{grid-template-columns:1fr;gap:10px}.standards-section{padding:64px 0}.faq-list{margin-top:3px}}
+
+/* TGCA 2026 · Galerie de plans 3D réellement intégrée au site */
+.plans-teaser{background:#fff}.plans-teaser-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.plan-teaser-card,.plans-card{background:#fff;border:1px solid #e3e8eb;border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(10,35,65,.07);transition:transform .25s,box-shadow .25s}.plan-teaser-card:hover,.plans-card:hover{transform:translateY(-4px);box-shadow:0 20px 38px rgba(10,35,65,.13)}.plan-teaser-card img{width:100%;height:230px;object-fit:cover;background:#edf1f2}.plan-teaser-card div{padding:23px}.plan-teaser-card small,.plans-card-body>span{display:block;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-size:10px}.plan-teaser-card h3{font-size:20px;margin:8px 0 12px;color:var(--navy)}.plan-teaser-card div>span,.plans-card-link{color:#a7792e;font-weight:800;font-size:12px}.plans-disclaimer{margin-top:24px;font-size:12px;color:#748493}.plans-page-hero{background:linear-gradient(90deg,#061d38f0,#061d3899),url('/static/img/riad-luxe.webp') center/cover;min-height:360px}.plans-page-hero h1{max-width:790px;color:#fff}.plans-page-hero h1 em{color:#e5b766;font-style:normal}.plans-page-hero p{color:#e3eaf1;max-width:690px}.plans-page{background:#f7f8f9}.plans-filters{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0 35px}.plans-filters a{font-size:13px;font-weight:700;border:1px solid #d6dee5;background:#fff;padding:10px 18px;border-radius:50px}.plans-filters a.chosen,.plans-filters a:hover{background:var(--navy);color:#fff;border-color:var(--navy)}.plans-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:25px}.plans-card-media{display:block;background:#e9efef}.plans-card-media img{width:100%;height:auto;aspect-ratio:1.64;object-fit:cover}.plans-card-body{padding:26px}.plans-card-body h3{font-size:23px;margin:9px 0;color:var(--navy)}.plans-card-body p{font-size:14px;min-height:70px}.plans-request{padding:68px 0;background:#0a2440;color:white}.plans-request>.container{display:flex;align-items:center;justify-content:space-between;gap:35px}.plans-request h2{color:#fff;max-width:650px}.plans-request p{color:#bdcad6;max-width:680px}.plans-request .btn{flex-shrink:0}.plan-detail-page{background:#f7f8f9}.plan-detail-head{display:flex;justify-content:space-between;align-items:flex-end;gap:35px;margin:22px 0 28px}.plan-detail-head h1{font-size:clamp(2.4rem,4vw,4rem);max-width:720px}.plan-detail-head p{max-width:660px}.plan-detail-head .btn{flex-shrink:0}.plan-large{background:#e5eae9;border:1px solid #dbe1e5;border-radius:12px;overflow:hidden;position:relative;box-shadow:0 18px 46px #14304a1c}.plan-large>img{width:100%}.plan-download{display:inline-flex;position:absolute;right:25px;bottom:25px;color:#fff;background:var(--navy);padding:13px 21px;border-radius:5px;font-size:12px;font-weight:700}.plan-detail-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:85px;padding:45px 0}.plan-detail-grid h2{font-size:32px}.plan-detail-grid>div>p{max-width:630px}.plan-room-list{margin:15px 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:11px;list-style:none}.plan-room-list li:before{content:'◆';color:var(--gold);font-size:10px;margin-right:10px}.plan-room-list li{padding:8px 0;border-bottom:1px solid #dae1e6;font-size:14px}
+@media(max-width:850px){.plans-teaser-grid{grid-template-columns:repeat(2,1fr)}.plans-cards{grid-template-columns:1fr}.plans-request>.container,.plan-detail-head{display:block}.plans-request .btn,.plan-detail-head .btn{margin-top:20px}.plan-detail-grid{gap:30px}}
+@media(max-width:570px){.plans-teaser-grid,.plan-detail-grid,.plan-room-list{grid-template-columns:1fr}.plan-teaser-card img{height:auto}.plan-download{position:static;display:block;text-align:center;border-radius:0}.plans-card-body p{min-height:0}}
+
+/* ===== Améliorations 2026-10 ===== */
+/* En-tête fixe au défilement */
+.site-header{position:sticky;top:0}
+.site-header.is-scrolled{box-shadow:0 8px 24px rgba(7,24,46,.08)}
+/* Correctif débordement mobile (page Entreprise) */
+.about-photo{position:relative}
+@media(max-width:670px){.about-overlap{right:0;bottom:-18px;padding:18px 22px}}
+/* Cartes services entièrement cliquables */
+.service-card{position:relative}
+.service-card .card-arrow::after{content:"";position:absolute;inset:0}
+.service-card:focus-within{box-shadow:var(--shadow)}
+/* Bandeau d'appel final : 2 actions */
+.bottom-cta-actions{display:flex;gap:12px;flex-wrap:wrap;flex:none}
+.bottom-cta-actions .btn-outline-dark{padding:16px 22px}
+/* Barre d'actions mobile */
+.mobile-action-bar{display:none}
+@media(max-width:840px){
+  .mobile-action-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(7,24,46,.08);padding:8px 10px calc(8px + env(safe-area-inset-bottom));gap:8px}
+  .mobile-action-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border-radius:5px;font-weight:750;font-size:13px;color:var(--navy);border:1px solid #d5dde4}
+  .mobile-action-bar a.is-primary{background:linear-gradient(125deg,#cfa04f 0%,#b57c23 100%);color:#fff;border-color:transparent}
+  .mobile-action-bar .ic{width:18px;height:18px}
+  body:not(.is-private){padding-bottom:66px}
+  .whatsapp-float{display:none!important}
+}
+.whatsapp-float{position:fixed;right:22px;bottom:22px;z-index:60;width:56px;height:56px;border-radius:50%;background:#1f9d55;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(0,0,0,.22);transition:transform .2s}
+.whatsapp-float:hover{transform:scale(1.07)}
+.whatsapp-float .ic{width:28px;height:28px}
+/* Formulaire : erreurs par champ */
+.field-error{display:block;color:#ad2839;font-size:12px;font-weight:650;margin-top:6px}
+.field [aria-invalid="true"]{border-color:#cc5060;box-shadow:0 0 0 3px #cc506018}
+/* Pages d'erreur */
+.error-page{padding:110px 0 120px;background:linear-gradient(180deg,#f5f6f6,#fff)}
+.error-inner{max-width:680px;text-align:center}
+.error-code{display:block;font-size:clamp(5rem,14vw,9rem);font-weight:850;line-height:1;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:2px var(--gold);margin-bottom:10px}
+.error-inner h1{font-size:clamp(2rem,4vw,3rem);color:var(--navy);margin:10px 0 14px}
+.error-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.error-links{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:34px;font-size:13px;font-weight:700;color:#a56e1a}
+/* Espaces privés */
+.footer-slim{padding:0}
+.footer-slim .footer-bottom{padding:22px 0;border-top:0;margin-top:0}
+.portal-header-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.portal-header-actions form{margin:0}
+.narrow-container{max-width:620px}
+.h2-like{font-size:clamp(1.7rem,3vw,2.2rem);color:var(--navy);margin:8px 0}
+.stack-form{display:grid;gap:4px}
+.admin-stat-grid>a{background:white;border:1px solid #e4ebf0;padding:23px 26px;box-shadow:0 8px 15px #102a3e06;transition:border-color .2s,transform .2s}
+.admin-stat-grid>a:hover{border-color:var(--gold);transform:translateY(-2px)}
+.admin-stat-grid>a.stat-alert{border-left:4px solid var(--gold)}
+.admin-stat-grid>a.stat-alert strong{color:#a56e1a}
+@media(max-width:840px){.admin-stat-grid{grid-template-columns:repeat(2,1fr)}}
+.filter-pills{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.filter-pills a{padding:7px 14px;border-radius:30px;border:1px solid #dbe2e8;font-size:12px;font-weight:700;color:#3b556c;background:#fff}
+.filter-pills a.chosen,.filter-pills a:hover{background:var(--navy);border-color:var(--navy);color:#fff}
+.admin-table td small{display:block}
+.admin-table tr.lead-nouveau td:first-child{box-shadow:inset 3px 0 0 var(--gold)}
+.message-cell details summary{cursor:pointer;list-style:none}
+.message-cell details summary::-webkit-details-marker{display:none}
+.message-cell details[open] summary{display:none}
+.message-cell details p{margin:0;color:inherit;white-space:pre-line}
+.admin-client-row{padding:14px 0;border-bottom:1px solid #edf0f2}
+.admin-client-row strong{display:block;font-size:13px;color:var(--navy)}
+.admin-client-row small{font-size:11px;color:#7b8997}
+.row-actions{margin-top:6px}
+.row-actions summary{cursor:pointer;font-size:12px;font-weight:700;color:#a56e1a;width:max-content}
+.row-actions[open]{background:#f7f9fa;padding:10px 12px;border-radius:4px}
+.row-actions form{margin-top:10px}
+.row-actions input{flex:1;min-width:0;padding:7px 9px;border:1px solid #dce3e8;font-size:12px}
+.danger-link{border:0;background:none;color:#a33a3a;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;padding:0}
+.danger-link .ic{width:15px;height:15px}
+.gallery-row{justify-content:flex-start}
+.gallery-row>img{width:64px;height:46px;object-fit:cover;border-radius:3px;flex:none}
+.gallery-row>div:nth-child(2){flex:1;min-width:0}
+.row-buttons{display:flex;gap:6px;align-items:center}
+.row-buttons form{margin:0}
+.mini-button.ghost{background:#eef2f5;color:var(--navy)}
+.icon-button{border:1px solid #ecd2d2;background:#fff;color:#a33a3a;border-radius:3px;width:31px;height:31px;display:inline-flex;align-items:center;justify-content:center}
+.icon-button .ic{width:15px;height:15px}
+.pill-on{color:#2a7a4c;font-weight:700}.pill-off{color:#a33a3a;font-weight:700}
+.activity-list{list-style:none;margin:0;padding:0;font-size:13px}
+.activity-list li{padding:9px 0;border-bottom:1px solid #edf0f2;color:#4b6278}
+.activity-list span{display:inline-block;min-width:140px;color:#8a98a6;font-variant-numeric:tabular-nums}
+.file-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #f0f2f4}
+.file-row form{margin:0}
+.file-link small{color:#8a98a6;font-weight:500;margin-left:6px}
+.task-count{font-size:12px;color:#8a98a6;font-weight:600;letter-spacing:0}
+.danger-zone{display:flex;justify-content:space-between;align-items:center;gap:20px;border:1px solid #f0d6d6;background:#fffafa;margin-top:24px}
+.danger-zone h2{font-size:17px;color:#8f2f2f;margin-bottom:4px}.danger-zone p{margin:0;font-size:13px}
+.btn-danger{background:#a33a3a;color:#fff;padding:12px 18px}
+.btn-danger:hover{background:#8a2c2c}
+@media(max-width:670px){.danger-zone{display:block}.danger-zone form{margin-top:14px}.gallery-row{flex-wrap:wrap}.row-buttons{width:100%;justify-content:flex-end}.activity-list span{display:block}}
+@media print{.site-header,.mobile-action-bar,.whatsapp-float,.bottom-cta,.site-footer{display:none!important}}
+@media(max-width:840px){body:not(.is-private) .header-actions .btn-gold{display:none}}
+/* Plans 3D : maquette mise en avant */
+.plan-feature{margin:0 0 40px;display:grid;grid-template-columns:1.6fr 1fr;background:var(--navy);border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+.plan-feature img{width:100%;height:100%;min-height:320px;object-fit:cover}
+.plan-feature figcaption{padding:36px 34px;display:flex;flex-direction:column;justify-content:center;gap:12px;color:#fff}
+.plan-feature figcaption span{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2)}
+.plan-feature figcaption strong{font-size:clamp(1.4rem,2.2vw,1.9rem);line-height:1.2;letter-spacing:-.02em}
+.plan-feature figcaption p{color:#cfdae5;margin:0 0 6px}
+.plan-feature .btn{align-self:flex-start}
+@media(max-width:850px){.plan-feature{grid-template-columns:1fr}.plan-feature img{min-height:0;aspect-ratio:16/9}.plan-feature figcaption{padding:24px 20px}}
+.plans-page-hero{background:linear-gradient(90deg,#061d38f0,#061d3899),url('/static/img/riad-patio.webp') center/cover}
