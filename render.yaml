@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: tgca-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: TGCA_ADMIN_TOKEN
+        generateValue: true
+      - key: TGCA_SITE_ORIGINS
+        value: https://raw.githack.com,https://rawcdn.githack.com,https://ucef90.github.io
+# ATTENTION: Render gratuit a un disque éphémère : SQLite n'est PAS
+# persistant après veille/redeploy. Pour l'utilisation commerciale,
+# connecter un stockage persistant et une adresse SMTP configurée.
