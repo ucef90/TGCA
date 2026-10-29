@@ -1,5 +1,12 @@
 # Journal des modifications — TGCA SARL.AU
 
+## 29 octobre 2026 — Nouvelles coordonnées
+- Coordonnées remplacées partout : **06 63 22 43 22** et **ste.tgca@gmail.com** (anciens 05 37 89 60 70 et 06 61 25 85 15 retirés).
+- WhatsApp sur le 212 663 22 43 22.
+- Coordonnées centralisées dans `app.py` (`CONTACT`, modifiables par `CONTACT_PHONE`, `CONTACT_TEL`, `CONTACT_EMAIL`).
+- Demandes de devis notifiées par défaut à ste.tgca@gmail.com (si SMTP configuré), avec « Répondre à » = e-mail du prospect.
+- Vitrine GitHub Pages : le formulaire de devis envoie réellement les demandes à ste.tgca@gmail.com via FormSubmit.
+
 ## 22 octobre 2026 — Correctifs et améliorations
 
 ### Sécurité
@@ -18,7 +25,7 @@
 ### Site public
 - En-tête fixe au défilement.
 - Mobile : barre d'actions en bas d'écran (« Appeler » + « Demander un devis »).
-- Bouton WhatsApp (06 61 25 85 15, confirmé par TGCA) : bouton flottant sur ordinateur, bouton dans la barre d'actions sur mobile. Réglable via `WHATSAPP_NUMBER`.
+- Bouton WhatsApp : bouton flottant sur ordinateur, bouton dans la barre d'actions sur mobile. Réglable via `WHATSAPP_NUMBER`.
 - Accueil allégé : suppression de la 2e section « 4 étapes » (doublon) et du 2e bloc « Demander un devis » consécutif.
 - Cartes « expertises » entièrement cliquables.
 - Bandeau final avec le numéro de téléphone cliquable.

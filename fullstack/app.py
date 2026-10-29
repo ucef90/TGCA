@@ -59,7 +59,13 @@ else:
     SECRET = secrets.token_urlsafe(48)
     logging.warning('SESSION_SECRET absent ou faible : clé temporaire utilisée (sessions perdues au redémarrage).')
 SITE_URL = os.getenv('SITE_URL', '').strip().rstrip('/')
-WHATSAPP_NUMBER = re.sub(r'\D', '', os.getenv('WHATSAPP_NUMBER', ''))
+# Coordonnées officielles TGCA (modifiables par variables d'environnement).
+CONTACT = dict(
+    phone=os.getenv('CONTACT_PHONE', '06 63 22 43 22'),
+    tel=os.getenv('CONTACT_TEL', '+212663224322'),
+    email=os.getenv('CONTACT_EMAIL', 'ste.tgca@gmail.com'),
+)
+WHATSAPP_NUMBER = re.sub(r'\D', '', os.getenv('WHATSAPP_NUMBER', '212663224322'))
 app = FastAPI(title='TGCA SARL.AU', docs_url=None if IS_PROD else '/api/docs', redoc_url=None)
 app.add_middleware(SessionMiddleware, secret_key=SECRET, same_site='lax', https_only=IS_PROD, session_cookie='tgca_session', max_age=60*60*10)
 if os.getenv('ALLOWED_HOSTS'):
@@ -218,7 +224,7 @@ def render(request, name, status_code=200, **data):
     root = site_url(request)
     base = dict(request=request, user=get_user(request), csrf=csrf_token(request), year=datetime.now().year,
                 services=SERVICES, title='TGCA SARL.AU | Construction au Maroc', description='TGCA SARL.AU : construction de bâtiments, immeubles, appartements et villas au Maroc. Études, réalisation et suivi de chantier.', current=request.url.path,
-                site_url=root, canonical=root+request.url.path, whatsapp=WHATSAPP_NUMBER, form={}, private=False)
+                site_url=root, canonical=root+request.url.path, whatsapp=WHATSAPP_NUMBER, contact=CONTACT, form={}, private=False)
     base.update(data)
     base['csp_nonce']=getattr(request.state,'csp_nonce','')
     return templates.TemplateResponse(request, name, base, status_code=status_code)
@@ -357,11 +363,11 @@ def contact_submit(request:Request,csrf:str=Form(''),name:str=Form(''),email:str
     return RedirectResponse('/merci',303)
 
 def notify_lead(name,email,phone,project_type,city,message):
-    address=os.getenv('NOTIFICATION_EMAIL')
+    address=os.getenv('NOTIFICATION_EMAIL') or CONTACT['email']
     smtp_host=os.getenv('SMTP_HOST')
     if not address or not smtp_host: return
     try:
-        em=EmailMessage(); em['To']=address; em['From']=os.getenv('SMTP_FROM',address); em['Subject']='[TGCA] Nouvelle demande de contact'
+        em=EmailMessage(); em['To']=address; em['From']=os.getenv('SMTP_FROM',address); em['Subject']=f'[TGCA] Nouvelle demande : {project_type or "projet"} — {name}'[:150]; em['Reply-To']=email
         em.set_content(f'Nom : {name}\nEmail : {email}\nTéléphone : {phone}\nProjet : {project_type}\nVille : {city}\n\n{message}')
         with smtplib.SMTP(smtp_host,int(os.getenv('SMTP_PORT',587)),timeout=12) as s:
             s.starttls()

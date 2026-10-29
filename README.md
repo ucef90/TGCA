@@ -5,7 +5,7 @@ Site professionnel TGCA pour la construction de villas, riads, immeubles, appart
 ## Voir le site
 
 - **Vitrine en ligne (GitHub Pages, gratuite) :** https://ucef90.github.io/TGCA/
-  Copie statique des pages publiques. Les formulaires et l'espace client y sont désactivés (un bandeau le signale).
+  Copie statique des pages publiques. Le formulaire de devis envoie les demandes par e-mail à ste.tgca@gmail.com (service gratuit FormSubmit) ; l'espace client y est désactivé.
 
 ## Contenu du dépôt
 
@@ -37,4 +37,4 @@ Ouvrir http://127.0.0.1:8000.
 
 ## Coordonnées TGCA
 
-N° 520, Route de Kénitra, Km 7, Salé, Maroc · 05 37 89 60 70 · 06 61 25 85 15 (WhatsApp).
+N° 520, Route de Kénitra, Km 7, Salé, Maroc · 06 63 22 43 22 (téléphone et WhatsApp) · ste.tgca@gmail.com

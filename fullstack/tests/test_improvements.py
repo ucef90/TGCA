@@ -155,3 +155,33 @@ def test_seed_v2_not_reinserted_after_admin_delete(client):
     site.init_db()
     with site.db() as c:
         assert c.execute("SELECT COUNT(*) n FROM portfolio WHERE slug='villa-vue-atlas'").fetchone()['n'] == 0
+
+
+def test_new_contact_details_everywhere(client):
+    for path in ('/', '/contact', '/mentions-legales', '/confidentialite'):
+        html = client.get(path).text
+        assert '06 63 22 43 22' in html and 'ste.tgca@gmail.com' in html, path
+        assert '61 25 85 15' not in html and '37 89 60 70' not in html, path
+    home = client.get('/').text
+    assert 'tel:+212663224322' in home and 'wa.me/212663224322' in home
+
+
+def test_lead_email_goes_to_tgca_with_reply_to(client, monkeypatch):
+    sent = []
+
+    class FakeSMTP:
+        def __init__(self, *a, **k): pass
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+        def starttls(self): pass
+        def login(self, *a): pass
+        def send_message(self, msg): sent.append(msg)
+
+    monkeypatch.setenv('SMTP_HOST', 'smtp.test')
+    monkeypatch.delenv('NOTIFICATION_EMAIL', raising=False)
+    monkeypatch.setattr(site.smtplib, 'SMTP', FakeSMTP)
+    tok = csrf(client)
+    r = client.post('/contact', data={'csrf': tok, 'name': 'Karim', 'email': 'karim@test.ma', 'phone': '0661000000',
+                                      'project_type': 'Villa haut standing', 'message': 'Villa R+1 à Salé', 'consent': 'yes'})
+    assert r.status_code == 303 and len(sent) == 1
+    assert sent[0]['To'] == 'ste.tgca@gmail.com' and sent[0]['Reply-To'] == 'karim@test.ma'

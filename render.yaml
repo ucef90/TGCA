@@ -19,7 +19,11 @@ services:
       - key: TGCA_DATA_DIR
         value: /opt/render/project/src/data
       - key: WHATSAPP_NUMBER
-        value: "212661258515"
+        value: "212663224322"
+      - key: NOTIFICATION_EMAIL
+        value: ste.tgca@gmail.com
+      # Pour recevoir les devis par e-mail, ajouter dans Render (secrets) :
+      # SMTP_HOST=smtp.gmail.com, SMTP_PORT=587, SMTP_USER=ste.tgca@gmail.com, SMTP_PASSWORD=<mot de passe d'application>
       # À renseigner avec l'URL Render ou le domaine final (canonical, sitemap) :
       # - key: SITE_URL
       #   value: https://tgca-construction.onrender.com

@@ -102,10 +102,11 @@ Les données SQLite et fichiers sont persistés dans le volume `tgca_data`. Pour
 | `SESSION_SECRET` | Secret de signature des sessions. **Obligatoire en production, 32 caractères minimum** : l'application refuse de démarrer avec la valeur d'exemple ou une clé trop courte |
 | `ENVIRONMENT=production` | Cookies HTTPS et HSTS, exigence d'un secret |
 | `SITE_URL` | URL publique du site (canonical, sitemap, robots.txt, Open Graph) |
-| `WHATSAPP_NUMBER` | Active le bouton WhatsApp. Valeur confirmée : `212661258515` (06 61 25 85 15). Laisser vide pour masquer le bouton |
+| `WHATSAPP_NUMBER` | Numéro WhatsApp (défaut `212663224322`, soit 06 63 22 43 22) |
+| `CONTACT_PHONE`, `CONTACT_TEL`, `CONTACT_EMAIL` | Coordonnées affichées sur le site (défauts : `06 63 22 43 22`, `+212663224322`, `ste.tgca@gmail.com`) |
 | `TGCA_DATA_DIR` | Dossier SQLite et fichiers |
 | `ALLOWED_HOSTS` | Liste de domaines autorisés, séparés par des virgules |
-| `NOTIFICATION_EMAIL` | Adresse destinataire des formulaires |
+| `NOTIFICATION_EMAIL` | Adresse qui reçoit les demandes de devis (défaut : `ste.tgca@gmail.com`). L'envoi exige SMTP configuré |
 | `SMTP_HOST`, `SMTP_PORT` | Serveur mail (optionnel) |
 | `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | Identifiants et expéditeur SMTP |
 
